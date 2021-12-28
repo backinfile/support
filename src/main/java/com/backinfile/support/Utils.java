@@ -225,7 +225,7 @@ public class Utils {
 
         StringJoiner sj = new StringJoiner("_");
         int begin = 0;
-        for (var end : sPointList) {
+        for (int end : sPointList) {
             sj.add(name.substring(begin, end).toLowerCase());
             begin = end;
         }
@@ -235,7 +235,7 @@ public class Utils {
     // test
     public static void main(String[] args) {
         System.out.println(Utils.format("{} say {}, {0}", "ww", "hi"));
-        for (var str : Arrays.asList("roomService", "room", "RPC", "RPCService", "convertVarName")) {
+        for (String str : Arrays.asList("roomService", "room", "RPC", "RPCService", "convertVarName")) {
             System.out.println(str + " -> " + convertVarName(str));
         }
     }
