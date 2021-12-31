@@ -3,7 +3,7 @@ package com.backinfile.support;
 import java.util.LinkedList;
 
 public abstract class ObjectPool<T> {
-	private LinkedList<T> freeObjs = new LinkedList<>();
+	private final LinkedList<T> freeObjs = new LinkedList<>();
 
 	public ObjectPool() {
 	}
