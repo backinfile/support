@@ -232,6 +232,18 @@ public class Utils {
         return sj.toString();
     }
 
+    /**
+     * 首字母大写
+     */
+    public static String capitalize(String str) {
+        if (Utils.isNullOrEmpty(str)) {
+            return "";
+        }
+        char[] chars = str.toCharArray();
+        chars[0] = Character.toUpperCase(chars[0]);
+        return String.valueOf(chars);
+    }
+
     // test
     public static void main(String[] args) {
         System.out.println(Utils.format("{} say {}, {0}", "ww", "hi"));
