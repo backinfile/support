@@ -6,7 +6,7 @@ public class Random {
     private final java.util.Random random;
 
     public Random() {
-        this(Time2.getCurMillis());
+        this(Time.getCurMillis());
     }
 
     public Random(long seed) {

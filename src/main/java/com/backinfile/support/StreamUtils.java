@@ -4,7 +4,10 @@ import com.backinfile.support.func.Action1;
 import com.backinfile.support.func.Function1;
 import com.backinfile.support.func.Predicate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class StreamUtils {
     public static <T, R> List<R> map(Collection<T> collection, Function1<R, T> function) {
@@ -58,5 +61,18 @@ public class StreamUtils {
             iterator.next();
         }
         return iterator.next();
+    }
+
+    public static <T> T getAny(Collection<T> collection) {
+        if (collection.isEmpty()) {
+            return null;
+        }
+        if (collection instanceof List) {
+            return ((List<T>) collection).get(0);
+        }
+        for (T t : collection) {
+            return t;
+        }
+        return null;
     }
 }

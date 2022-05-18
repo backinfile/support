@@ -64,6 +64,9 @@ public class Utils {
     }
 
     public static <T> T randItem(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
         int index = nextInt(list.size());
         return list.get(index);
     }
@@ -145,7 +148,19 @@ public class Utils {
         int length = pattern.length();
         for (int i = 0; i < length; i++) {
             char curChar = pattern.charAt(i);
+            if (curChar == '}' && i + 1 < length && pattern.charAt(i + 1) == '}') {
+                sb.append('}');
+                i++;
+                continue;
+            }
+
             if (curChar == '{') {
+                if (i + 1 < length && pattern.charAt(i + 1) == '{') {
+                    sb.append('{');
+                    i++;
+                    continue;
+                }
+
                 boolean hasNumber = false;
                 boolean stoped = false;
                 int number = 0;
@@ -162,10 +177,15 @@ public class Utils {
                     }
                 }
                 if (stoped) {
-                    if (hasNumber) {
-                        sb.append(argStrings[number]);
+                    int useIndex = hasNumber ? number : defaultIndex;
+                    if (useIndex < argStrings.length) {
+                        sb.append(argStrings[useIndex]);
                     } else {
-                        sb.append(argStrings[defaultIndex]);
+                        sb.append("{");
+                        if (hasNumber) {
+                            sb.append(number);
+                        }
+                        sb.append("}");
                     }
                     defaultIndex++;
                 } else {
