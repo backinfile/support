@@ -64,15 +64,34 @@ public class StreamUtils {
     }
 
     public static <T> T getAny(Collection<T> collection) {
-        if (collection.isEmpty()) {
+        if (collection == null || collection.isEmpty()) {
             return null;
         }
-        if (collection instanceof List) {
-            return ((List<T>) collection).get(0);
-        }
-        for (T t : collection) {
-            return t;
-        }
-        return null;
+        return get(collection, 0);
     }
+
+    public static int sum(Collection<Integer> integers) {
+        int result = 0;
+        for (Integer integer : integers) {
+            result += integer;
+        }
+        return result;
+    }
+
+    public static <T> ArrayList<T> slice(List<T> list, int fromIndex) {
+        return slice(list, fromIndex, list.size());
+    }
+
+    public static <T> ArrayList<T> slice(List<T> list, int fromIndex, int toIndex) {
+        ArrayList<T> result = new ArrayList<>();
+        if (fromIndex >= list.size()) {
+            return result;
+        }
+        toIndex = Math.min(toIndex, list.size());
+        for (; fromIndex < toIndex; fromIndex++) {
+            result.add(list.get(fromIndex));
+        }
+        return result;
+    }
+
 }

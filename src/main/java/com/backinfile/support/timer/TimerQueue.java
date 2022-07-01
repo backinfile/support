@@ -1,5 +1,6 @@
 package com.backinfile.support.timer;
 
+import com.backinfile.support.Time;
 import com.backinfile.support.func.Action0;
 import com.backinfile.support.func.Function0;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 public class TimerQueue {
     private Map<Long, TimeEvent> timers = new HashMap<>();
     private Function0<Long> getTimeFunc = null;
-    private long idMax = 0;
+    private long idMax = 1;
 
     private static class TimeEvent {
         public Timer timer;
@@ -18,7 +19,7 @@ public class TimerQueue {
     }
 
     public TimerQueue() {
-        this(null);
+        this(Time::currentTimeMillis);
     }
 
     public TimerQueue(Function0<Long> getTimeFunc) {
@@ -34,13 +35,9 @@ public class TimerQueue {
         TimeEvent timeEvent = new TimeEvent();
         timeEvent.action = action;
         timeEvent.timer = timer;
-        long id = applyId();
+        long id = idMax++;
         timers.put(id, timeEvent);
         return id;
-    }
-
-    private long applyId() {
-        return idMax++;
     }
 
     public void removeTimer(long timerId) {

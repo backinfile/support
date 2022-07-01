@@ -10,11 +10,11 @@ import java.util.List;
  * 处理消息，产生数据的终端
  *
  * @param <In>  需要处理的数据，在内部维护一个queue
- * @param <Out> 产生的数据，可通过listener获取
+ * @param <Out> 产生的数据，通过listener获取
  */
 public abstract class Terminal<In, Out> {
-    private LinkedList<In> msgQueue = new LinkedList<In>();
-    private List<Action1<Out>> outputListeners = new ArrayList<>();
+    private final LinkedList<In> msgQueue = new LinkedList<In>();
+    private final List<Action1<Out>> outputListeners = new ArrayList<>();
 
     /**
      * 输入消息
@@ -49,4 +49,17 @@ public abstract class Terminal<In, Out> {
             listener.invoke(out);
         }
     }
+
+    /*
+        更新示例：
+        public void update() {
+          while (hasMsg()) {
+              In msg = pollMsg();
+              Out out = dealMsg(msg);
+              if (out != null) {
+                  outputMsg(out);
+              }
+          }
+        }
+     */
 }

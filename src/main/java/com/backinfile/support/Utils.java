@@ -7,7 +7,6 @@ import java.util.*;
 
 public class Utils {
     public static final String UTF8 = "utf-8";
-    private static final Random RANDOM = new Random();
     public static final String NUMBER = "1234567890";
     public static final String LETTER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final String LETTER_AND_NUMBER = LETTER + NUMBER;
@@ -15,10 +14,6 @@ public class Utils {
 
     public static boolean isNullOrEmpty(String str) {
         return str == null || str.equals("");
-    }
-
-    public static <T> ArrayList<T> subList(List<T> list, int fromIndex, int toIndex) {
-        return new ArrayList<T>(list.subList(fromIndex, toIndex));
     }
 
     public static int indexOf(int[] array, int value) {
@@ -37,38 +32,6 @@ public class Utils {
             result[i] = Integer.parseInt(strs[i]);
         }
         return result;
-    }
-
-    public static void setRndSeed(long seed) {
-        RANDOM.setSeed(seed);
-    }
-
-    public static boolean nextBoolean() {
-        return RANDOM.nextBoolean();
-    }
-
-    public static double nextDouble() {
-        return RANDOM.nextDouble();
-    }
-
-    public static int nextInt(int b) {
-        return nextInt(0, b);
-    }
-
-    public static int nextInt(int a, int b) {
-        return RANDOM.nextInt(b - a) + a;
-    }
-
-    public static double nextDouble(double a, double b) {
-        return RANDOM.nextDouble() * (b - a) + a;
-    }
-
-    public static <T> T randItem(List<T> list) {
-        if (list == null || list.isEmpty()) {
-            return null;
-        }
-        int index = nextInt(list.size());
-        return list.get(index);
     }
 
     public static String getBlankString(int n) {

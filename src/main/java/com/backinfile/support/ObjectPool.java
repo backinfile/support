@@ -3,23 +3,23 @@ package com.backinfile.support;
 import java.util.LinkedList;
 
 public abstract class ObjectPool<T> {
-	private final LinkedList<T> freeObjs = new LinkedList<>();
+    private final LinkedList<T> freeObjects = new LinkedList<>();
 
-	public ObjectPool() {
-	}
+    public ObjectPool() {
+    }
 
-	public int getFreeCount() {
-		return freeObjs.size();
-	}
+    public int getFreeCount() {
+        return freeObjects.size();
+    }
 
-	protected abstract T newObject();
+    protected abstract T newObject();
 
-	public T obtain() {
-		return freeObjs.isEmpty() ? newObject() : freeObjs.pollLast();
-	}
+    public T obtain() {
+        return freeObjects.isEmpty() ? newObject() : freeObjects.pollLast();
+    }
 
-	public void free(T obj) {
-		freeObjs.addLast(obj);
-	}
+    public void free(T obj) {
+        freeObjects.addLast(obj);
+    }
 
 }

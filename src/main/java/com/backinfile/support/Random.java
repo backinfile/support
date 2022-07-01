@@ -1,8 +1,15 @@
 package com.backinfile.support;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Random {
+    private static final Random _instance = new Random();
+
+    public static Random getInstance() {
+        return _instance;
+    }
+
     private final java.util.Random random;
 
     public Random() {
@@ -22,8 +29,27 @@ public class Random {
     }
 
     public <T> T randItem(Collection<T> collection) {
-        int size = collection.size();
-        int index = next(size);
-        return StreamUtils.get(collection, index);
+        return StreamUtils.get(collection, next(collection.size()));
+    }
+
+    /**
+     * 输入权重，输出一个随机的Index
+     * 要求权重不小于0
+     */
+    public int randWeightIndex(List<Integer> weights) {
+        int sum = StreamUtils.sum(weights);
+        int rand = next(sum);
+        for (int i = 0; i < weights.size(); i++) {
+            Integer w = weights.get(i);
+            if (rand < w) {
+                return i;
+            }
+            rand -= w;
+        }
+        return weights.size() - 1;
+    }
+
+    public <T> T randWeight(List<Integer> weight, List<T> list) {
+        return list.get(randWeightIndex(weight));
     }
 }
