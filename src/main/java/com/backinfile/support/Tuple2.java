@@ -13,6 +13,15 @@ public class Tuple2<T1, T2> {
         return new Tuple2<>(value1, value2);
     }
 
+
+    public T1 getValue1() {
+        return value1;
+    }
+
+    public T2 getValue2() {
+        return value2;
+    }
+
     @Override
     public String toString() {
         return "<" + value1.toString() + "," + value2.toString() + ">";

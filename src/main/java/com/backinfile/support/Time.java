@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Time {
     public static final long SEC = 1000;
@@ -18,15 +19,15 @@ public class Time {
     public static final int TIME_ZONE_OFFSET = TimeZone.getDefault().getRawOffset();
     private static final long GMT_WEEK_OFFSET = 3 * DAY; // GMT第一天是星期四
 
-    public static final String dataFormatter = "yyyy-MM-dd HH:mm:ss";
-    public static final String dataFormatter2 = "yyyy-MM-dd HH:mm:ss";
-    public static final String dayFormatter = "yyyy-MM-dd";
-    public static final String dayFormatter2 = "yyyyMMdd";
+    public static final String DataFormatter = "yyyy-MM-dd HH:mm:ss";
+    public static final String DayFormatter = "yyyy-MM-dd";
+    public static final String DayFormatter2 = "yyyyMMdd";
 
     private static final Map<String, SimpleDateFormat> formatterMap = new HashMap<>();
+    public static final AtomicLong TIME_OFFSET = new AtomicLong(0); // 主动设置的系统时间偏差
 
     public static long currentTimeMillis() {
-        return System.currentTimeMillis();
+        return System.currentTimeMillis() + TIME_OFFSET.get();
     }
 
     public static long getCurMillis() {
@@ -35,7 +36,7 @@ public class Time {
 
 
     public static String formatTime() {
-        return formatTime(currentTimeMillis(), dataFormatter);
+        return formatTime(currentTimeMillis(), DataFormatter);
     }
 
     public static String formatTime(long time, String pattern) {
@@ -44,7 +45,7 @@ public class Time {
     }
 
     public static long parseData(String dataStr) {
-        return parseData(dataStr, dataFormatter, false);
+        return parseData(dataStr, DataFormatter, false);
     }
 
     /**
@@ -66,7 +67,7 @@ public class Time {
     }
 
     public static int getYYYYMMDD(long time) {
-        return Integer.parseInt(formatTime(time, dayFormatter2));
+        return Integer.parseInt(formatTime(time, DayFormatter2));
     }
 
     private static SimpleDateFormat getFormatter(String pattern) {
