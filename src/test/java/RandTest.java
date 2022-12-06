@@ -1,4 +1,5 @@
 import com.backinfile.support.Random;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -26,5 +27,22 @@ public class RandTest {
             randResult.set(i, Math.round(randResult.get(i) * 1f / randResult.get(3)));
         }
         assert rate.equals(randResult);
+    }
+
+    @RepeatedTest(3)
+    public void testBool() {
+        int trueCount = 0;
+        int falseCount = 0;
+        int MAX = 1000000;
+        Random random = Random.getInstance();
+        for (int i = 0; i < MAX; i++) {
+            if (random.nextBool()) {
+                trueCount++;
+            } else {
+                falseCount++;
+            }
+        }
+//        System.out.println(Math.abs(trueCount - falseCount));
+        assert Math.abs(trueCount - falseCount) < MAX / 100;
     }
 }

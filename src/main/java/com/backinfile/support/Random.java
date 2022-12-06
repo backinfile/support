@@ -11,24 +11,44 @@ public class Random {
     }
 
     private final java.util.Random random;
+    private int counter = 0;
+    private final long seed;
 
     public Random() {
         this(Time.getCurMillis());
     }
 
     public Random(long seed) {
-        random = new java.util.Random(seed);
+        this.random = new java.util.Random(seed);
+        this.seed = seed;
     }
 
-    public int next(int b) {
-        return random.nextInt(b);
+    public Random(long seed, int counter) {
+        this.random = new java.util.Random(seed);
+        this.seed = seed;
+
+        for(int i = 0; i < counter; i++) {
+            next(1);
+        }
+    }
+
+    public int next(int bound) {
+        counter++;
+        return random.nextInt(bound);
     }
 
     public int next(int a, int b) {
-        return random.nextInt(b - a) + a;
+        return next(b - a) + a;
+    }
+
+    public boolean nextBool() {
+        return next(2) == 0;
     }
 
     public <T> T randItem(Collection<T> collection) {
+        if (collection == null || collection.isEmpty()) {
+            return null;
+        }
         return StreamUtils.get(collection, next(collection.size()));
     }
 
@@ -51,5 +71,17 @@ public class Random {
 
     public <T> T randWeight(List<Integer> weight, List<T> list) {
         return list.get(randWeightIndex(weight));
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public long getSeed() {
+        return seed;
+    }
+
+    public Random copy() {
+        return new Random(getSeed(), getCounter());
     }
 }
